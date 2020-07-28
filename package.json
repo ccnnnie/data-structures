@@ -1,0 +1,19 @@
+{
+  "name": "data-structures",
+  "version": "1.0.0",
+  "description": "Practice implementing data structures.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/connielok/data-structures.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/connielok/data-structures/issues"
+  },
+  "homepage": "https://github.com/connielok/data-structures#readme"
+}
