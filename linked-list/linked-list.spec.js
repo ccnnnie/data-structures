@@ -14,7 +14,7 @@ describe('A singly linked list', () => {
 
   test('can add two nodes to list', () => {
     list.push('HELLO').push('WORLD');
-    expect(list.length).toEqual(2);
+    expect(list.length).toBe(2);
     expect(list.head).toEqual({ val: 'HELLO', next: list.tail });
     expect(list.head.next).toEqual(list.tail);
     expect(list.tail.val).toBe('WORLD');

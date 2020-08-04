@@ -29,6 +29,7 @@ class SinglyLinkedList {
   // O(n) time complexity where n is length of list
   pop() {
     let currNode = this.head;
+    let oldTail = this.tail;
     if (!currNode) return undefined;
     else if (currNode === this.tail) {
       this.tail = null;
@@ -43,11 +44,12 @@ class SinglyLinkedList {
       }
     }
     this.length--;
-    return this;
+    return oldTail;
   }
 
   // O(1) time complexity
   shift() {
+    let oldHead = this.head;
     if (!this.head) return undefined;
     else if (this.head === this.tail) {
       this.tail = null;
@@ -56,7 +58,7 @@ class SinglyLinkedList {
       this.head = this.head.next;
     }
     this.length--;
-    return this;
+    return oldHead;
   }
 
   // O(1) time complexity
