@@ -113,9 +113,44 @@ describe('A singly linked list', () => {
       .push('Mar')
       .push('Apr')
       .insert('Feb', 1);
+    expect(list.length).toBe(4);
     expect(list.head.next.val).toBe('Feb');
     expect(list.head.next.next.val).toBe('Mar');
     list.insert('May', 4);
     expect(list.tail.val).toBe('May');
+    expect(list.length).toBe(5);
+  });
+
+  test('can remove a node from a specified position', () => {
+    list
+      .push(1)
+      .push(2)
+      .push(3)
+      .push(4)
+      .push(5)
+      .remove(1);
+    expect(list.length).toBe(4);
+    expect(list.head.next.val).toBe(3);
+    list.remove(0);
+    expect(list.head.val).toBe(3);
+    list.remove(2);
+    expect(list.tail.val).toBe(4);
+  });
+
+  test('can reverse the list in place', () => {
+    list
+      .push(1)
+      .push(2)
+      .push(3)
+      .push(4)
+      .push(5)
+      .reverse();
+    expect(list.length).toBe(5);
+    expect(list.head.val).toBe(5);
+    expect(list.tail.val).toBe(1);
+    expect(list.tail).toBe(list.head.next.next.next.next);
+    expect(list.head.next.val).toBe(4);
+    expect(list.head.next.next.val).toBe(3);
+    expect(list.head.next.next.next.val).toBe(2);
   });
 });

@@ -12,6 +12,7 @@ class SinglyLinkedList {
     this.length = 0;
   }
 
+  // O(1) time complexity
   push(val) {
     const newNode = new Node(val);
     if (!this.head) {
@@ -25,6 +26,7 @@ class SinglyLinkedList {
     return this;
   }
 
+  // O(n) time complexity where n is length of list
   pop() {
     let currNode = this.head;
     if (!currNode) return undefined;
@@ -44,6 +46,7 @@ class SinglyLinkedList {
     return this;
   }
 
+  // O(1) time complexity
   shift() {
     if (!this.head) return undefined;
     else if (this.head === this.tail) {
@@ -56,6 +59,7 @@ class SinglyLinkedList {
     return this;
   }
 
+  // O(1) time complexity
   unshift(val) {
     const newNode = new Node(val);
     if (!this.head) {
@@ -69,8 +73,9 @@ class SinglyLinkedList {
     return this;
   }
 
+  // O(n) time complexity where n is length of list
   get(idx) {
-    if (idx < 0 || idx >= this.length) return null;
+    if (idx < 0 || idx >= this.length) return undefined;
     let currIdx = 0;
     let currNode = this.head;
     while (currIdx !== idx) {
@@ -80,19 +85,21 @@ class SinglyLinkedList {
     return currNode;
   }
 
+  // O(n) time complexity where n is length of list
   set(val, idx) {
     const node = this.get(idx);
-    if (!node) return false;
+    if (!node) return undefined;
     else {
       node.val = val;
-      return true;
+      return node;
     }
   }
 
+  // O(n) time complexity where n is length of list (worst case)
   insert(val, idx) {
-    if (idx < 0 || idx > this.length) return false;
-    if (idx === 0) this.unshift(val);
-    else if (idx === this.length) this.push(val);
+    if (idx < 0 || idx > this.length) return undefined;
+    if (idx === 0) return this.unshift(val);
+    else if (idx === this.length) return this.push(val);
     else {
       let currIdx = 0;
       let currNode = this.head;
@@ -104,9 +111,44 @@ class SinglyLinkedList {
         }
         currNode = currNode.next;
         currIdx++;
+        this.length++;
+        return newNode;
       }
     }
-    this.length++;
+  }
+
+  // O(n) time complexity where n is length of list (worst case)
+  remove(idx) {
+    if (idx < 0 || idx >= this.length) return undefined;
+    else if (idx === 0) return this.shift();
+    else if (idx === this.length - 1) return this.pop();
+    else {
+      let currIdx = 0;
+      let currNode = this.head;
+      while (currIdx !== idx - 1) {
+        currNode = currNode.next;
+        currIdx++;
+      }
+      const removedNode = currNode.next;
+      currNode.next = removedNode.next;
+      this.length--;
+      return removedNode;
+    }
+  }
+
+  // O(n) time complexity where n is length of list
+  reverse() {
+    let currNode = this.head;
+    let nextNode = currNode.next;
+    let prevNode = null;
+    this.tail = this.head;
+    while (currNode) {
+      currNode.next = prevNode;
+      prevNode = currNode;
+      currNode = nextNode;
+      if (nextNode) nextNode = nextNode.next;
+    }
+    this.head = prevNode;
     return this;
   }
 }
