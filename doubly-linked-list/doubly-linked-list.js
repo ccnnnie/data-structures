@@ -88,8 +88,11 @@ class DoublyLinkedList {
   // }
 
   // slight optimization for DLL
+  // O(n/2) => O(n) time complexity where n is length of list
   get(idx) {
     if (idx < 0 || idx >= this.length) return undefined;
+    if (idx === 0) return this.head;
+    if (idx === this.length - 1) return this.tail;
     let currNode, currIdx;
     if (idx < this.length / 2) {
       currIdx = 0;
@@ -109,12 +112,51 @@ class DoublyLinkedList {
     return currNode;
   }
 
+  // O(p) time complexity where p is position (or index) of the node
+  // O(1) if you already have reference to the node or if setting values of head or tail
   set(val, idx) {
     let node = this.get(idx);
     if (!node) {
       return undefined;
     }
     node.val = val;
+    return node;
+  }
+
+  // O(p) time complexity where p is position of the node because of iterating through the list to find the node
+  // O(1) if you already have reference to the node at position p or if inserting at beginning or end of list
+  insert(val, idx) {
+    if (idx < 0 || idx > this.length) {
+      return undefined;
+    } else if (idx === 0) return this.unshift(val);
+    else if (idx === this.length) return this.push(val);
+
+    let node = this.get(idx);
+    const newNode = new Node(val);
+    newNode.next = node;
+    newNode.prev = node.prev;
+    node.prev.next = newNode;
+    node.prev = newNode;
+    this.length++;
+    return this;
+  }
+
+  // O(p) time complexity where p is position of the node because of iterating through the list to find the node
+  // O(1) if you already have reference to the node at position p or if removing from beginning or end of list
+  remove(idx) {
+    if (idx < 0 || idx >= this.length) {
+      return undefined;
+    } else if (idx === 0) return this.shift();
+    else if (idx === this.length - 1) return this.pop();
+
+    let node = this.get(idx);
+    let nextNode = node.next;
+    let prevNode = node.prev;
+    prevNode.next = nextNode;
+    nextNode.prev = prevNode;
+    node.next = null;
+    node.prev = null;
+    this.length--;
     return node;
   }
 }

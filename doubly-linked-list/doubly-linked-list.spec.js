@@ -94,6 +94,8 @@ describe('A double linked list', () => {
     const chicken = list.get(3);
     expect(chicken).toEqual(list.tail);
     expect(chicken.val).toBe('chicken');
+    const noNode = list.get(-8);
+    expect(noNode).toBe(undefined);
   });
 
   test('can change the value of a node by its position in the list', () => {
@@ -105,5 +107,42 @@ describe('A double linked list', () => {
     expect(list.tail.val).toBe('snacking');
     expect(list.tail.prev.val).toBe('be');
     expect(list.tail.next).toBe(null);
+  });
+
+  test('can insert a node at a specified position', () => {
+    list
+      .push('Jan')
+      .push('Mar')
+      .push('Apr')
+      .insert('Feb', 1);
+    expect(list.length).toBe(4);
+    expect(list.head.next.val).toBe('Feb');
+    expect(list.head.next.next.val).toBe('Mar');
+    expect(list.tail.prev.prev.val).toBe('Feb');
+    expect(list.tail.prev.prev.prev).toEqual(list.head);
+    list.insert('May', 4);
+    expect(list.tail.val).toBe('May');
+    expect(list.tail.prev.val).toBe('Apr');
+    expect(list.length).toBe(5);
+  });
+
+  test('can remove a node from a specified position', () => {
+    list
+      .push(1)
+      .push(2)
+      .push(3)
+      .push(4)
+      .push(5)
+      .remove(2);
+    expect(list.length).toBe(4);
+    expect(list.head.next.next.val).toBe(4);
+    expect(list.head.next.next).toEqual(list.tail.prev);
+    list.remove(3);
+    expect(list.tail.val).toBe(4);
+    expect(list.tail.prev.val).toBe(2);
+    expect(list.tail.next).toBe(null);
+    list.remove(0);
+    expect(list.head.prev).toBe(null);
+    expect(list.head.val).toBe(2);
   });
 });
