@@ -26,7 +26,7 @@ class SinglyLinkedList {
     return this;
   }
 
-  // O(n) time complexity where n is length of list
+  // O(n) time complexity where n is length of list because of iterating through list to find the node before the tail
   pop() {
     let currNode = this.head;
     let oldTail = this.tail;
@@ -75,11 +75,13 @@ class SinglyLinkedList {
     return this;
   }
 
-  // O(n) time complexity where n is length of list
+  // O(p) time complexity where p is position (or index) of the node
   get(idx) {
     if (idx < 0 || idx >= this.length) return undefined;
-    let currIdx = 0;
-    let currNode = this.head;
+    if (idx === 0) return this.head;
+    if (idx === this.length - 1) return this.tail;
+    let currIdx = 1;
+    let currNode = this.head.next;
     while (currIdx !== idx) {
       currNode = currNode.next;
       currIdx++;
@@ -87,7 +89,8 @@ class SinglyLinkedList {
     return currNode;
   }
 
-  // O(n) time complexity where n is length of list
+  // O(p) time complexity where p is position (or index) of the node
+  // O(1) if setting values of head or tail
   set(val, idx) {
     const node = this.get(idx);
     if (!node) return undefined;
@@ -97,7 +100,8 @@ class SinglyLinkedList {
     }
   }
 
-  // O(n) time complexity where n is length of list (worst case)
+  // O(p) time complexity where p is position of the node because of iterating through the list to find the node at position-1
+  // O(1) if inserting at beginning or end of list
   insert(val, idx) {
     if (idx < 0 || idx > this.length) return undefined;
     if (idx === 0) return this.unshift(val);
@@ -114,12 +118,13 @@ class SinglyLinkedList {
         currNode = currNode.next;
         currIdx++;
         this.length++;
-        return newNode;
+        return this;
       }
     }
   }
 
-  // O(n) time complexity where n is length of list (worst case)
+  // O(p) time complexity where p is position of the node because of iterating through the list to find the node at position-1
+  // O(1) if removing at beginning of list
   remove(idx) {
     if (idx < 0 || idx >= this.length) return undefined;
     else if (idx === 0) return this.shift();
