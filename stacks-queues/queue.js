@@ -14,6 +14,7 @@ class Queue {
     this.size = 0;
   }
 
+  // O(1) time complexity
   enqueue(val) {
     let newNode = new Node(val);
     if (!this.first) {
@@ -27,6 +28,7 @@ class Queue {
     return this;
   }
 
+  // O(1) time complexity
   dequeue() {
     if (!this.first) return undefined;
     let oldFirst = this.first;
