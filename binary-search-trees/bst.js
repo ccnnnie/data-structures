@@ -86,6 +86,11 @@ class BST {
   //   }
   // }
 
+  // time complexity is the same for bfs and dfs because we visit every node once
+  // space complexity:
+  //    bfs: there will be more items in the queue if the tree is wider
+  //    dfs: there will be more calls in the call stack as the tree gets deeper
+
   bfs(func) {
     const queue = [this];
     while (queue.length) {
