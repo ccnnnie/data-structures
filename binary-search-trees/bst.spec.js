@@ -3,8 +3,10 @@ const { TestScheduler } = require('jest');
 
 describe('A Binary Search Tree', () => {
   let tree;
+  let values;
   beforeEach(function() {
     tree = new BST(50);
+    values = [25, 75, 12, 5, 33, 64, 90, 81, 18];
   });
 
   test('can be created with the given value', () => {
@@ -27,7 +29,6 @@ describe('A Binary Search Tree', () => {
   });
 
   test('can insert many values in the right locations', () => {
-    const values = [25, 75, 12, 5, 33, 64, 90, 81, 18];
     values.forEach((num) => tree.insert(num));
     expect(tree.left.val).toBe(25);
     expect(tree.left.left.val).toBe(12);
@@ -50,12 +51,39 @@ describe('A Binary Search Tree', () => {
   });
 
   test('can confirm is a node of a certain value exists', () => {
-    const values = [25, 75, 12, 5, 33, 64, 90, 81, 18];
     values.forEach((num) => tree.insert(num));
     expect(tree.contains(50)).toBe(true);
     expect(tree.contains(25)).toBe(true);
     expect(tree.contains(-43)).toBe(false);
     expect(tree.contains(90)).toBe(true);
     expect(tree.contains(62)).toBe(false);
+  });
+
+  test('can visit every sibling node before visiting children (breadth first search)', () => {
+    values.forEach((num) => tree.insert(num));
+    let valuesInTree = [];
+    tree.bfs((val) => valuesInTree.push(val));
+    expect(valuesInTree).toEqual([50, 25, 75, 12, 33, 64, 90, 5, 18, 81]);
+  });
+
+  test('can visit every node in depth first search: pre-order', () => {
+    values.forEach((num) => tree.insert(num));
+    let valuesInTree = [];
+    tree.dfs((val) => valuesInTree.push(val), 'pre-order');
+    expect(valuesInTree).toEqual([50, 25, 12, 5, 18, 33, 75, 64, 90, 81]);
+  });
+
+  test('can visit every node in depth first search: post-order', () => {
+    values.forEach((num) => tree.insert(num));
+    let valuesInTree = [];
+    tree.dfs((val) => valuesInTree.push(val), 'post-order');
+    expect(valuesInTree).toEqual([5, 18, 12, 33, 25, 64, 81, 90, 75, 50]);
+  });
+
+  test('can visit every node in depth first search: in-order', () => {
+    values.forEach((num) => tree.insert(num));
+    let valuesInTree = [];
+    tree.dfs((val) => valuesInTree.push(val));
+    expect(valuesInTree).toEqual([5, 12, 18, 25, 33, 50, 64, 75, 81, 90]);
   });
 });

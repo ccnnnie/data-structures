@@ -85,6 +85,42 @@ class BST {
   //     return this.contains(val, node.right);
   //   }
   // }
+
+  bfs(func) {
+    const queue = [this];
+    while (queue.length) {
+      let node = queue.shift();
+      func(node.val);
+      if (node.left) queue.push(node.left);
+      if (node.right) queue.push(node.right);
+    }
+  }
+
+  dfs(func, order = 'in-order', node = this) {
+    switch (order) {
+      case 'pre-order': {
+        // root, left, right
+        func(node.val);
+        if (node.left) this.dfs(func, 'pre-order', node.left);
+        if (node.right) this.dfs(func, 'pre-order', node.right);
+        break;
+      }
+      case 'post-order': {
+        // left, right, root
+        if (node.left) this.dfs(func, 'post-order', node.left);
+        if (node.right) this.dfs(func, 'post-order', node.right);
+        func(node.val);
+        break;
+      }
+      default: {
+        // left, root, right
+        if (node.left) this.dfs(func, 'in-order', node.left);
+        func(node.val);
+        if (node.right) this.dfs(func, 'in-order', node.right);
+        break;
+      }
+    }
+  }
 }
 
 module.exports = BST;
