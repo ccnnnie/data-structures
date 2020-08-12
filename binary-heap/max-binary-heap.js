@@ -26,6 +26,7 @@ class MaxBinaryHeap {
     }
   }
 
+  //O(log n) time complexity
   extractMax() {
     if (!this.values.length) return null;
     const removedMax = this.values[0];

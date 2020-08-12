@@ -14,6 +14,7 @@ class PriorityQueue {
     this.values = [];
   }
 
+  //O(log n) time complexity
   enqueue(val, priority) {
     const newNode = new Node(val, priority);
     this.values.push(newNode);
@@ -38,6 +39,7 @@ class PriorityQueue {
     }
   }
 
+  //O(log n) time complexity
   dequeue() {
     if (!this.values.length) return null;
     let highestPriority = this.values[0];

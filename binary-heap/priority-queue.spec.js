@@ -49,8 +49,7 @@ describe('A priority queue', () => {
     expect(heap.dequeue()).toEqual(new Node(17, 2));
     expect(heap.dequeue()).toEqual(new Node(14, 2));
     expect(heap.dequeue()).toEqual(new Node(36, 3));
-    // expect(heap.values).toEqual([130, 100, 126, 45, 17, 6, 19, 36]);
-    // expect(heap.dequeue()).toBe(130);
-    // expect(heap.values).toEqual([126, 100, 36, 45, 17, 6, 19]);
+
+    expect(heap.values).toEqual([new Node(100, 4), new Node(500, 5)]);
   });
 });
