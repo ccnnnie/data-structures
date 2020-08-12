@@ -3,6 +3,7 @@ class MaxBinaryHeap {
     this.values = [];
   }
 
+  //O(log n) time complexity
   insert(val) {
     this.values.push(val);
     if (this.values.length > 1) {
@@ -29,7 +30,7 @@ class MaxBinaryHeap {
     if (!this.values.length) return null;
     const removedMax = this.values[0];
     const end = this.values.pop();
-    if (this.values.length > 1) {
+    if (this.values.length > 0) {
       this.values[0] = end;
       this.bubbleDown();
     }
@@ -39,24 +40,34 @@ class MaxBinaryHeap {
   bubbleDown() {
     let idx = 0;
     const length = this.values.length;
+
     while (idx < length) {
-      let root = this.values[idx];
+      let elem = this.values[idx];
       let leftChildIdx = 2 * idx + 1;
       let rightChildIdx = 2 * idx + 2;
-      let left = leftChildIdx < length ? this.values[leftChildIdx] : null;
-      let right = leftChildIdx < length ? this.values[rightChildIdx] : null;
-      if ((root > left && root > right) || (!left && !right)) break;
-      else if ((root > left && !right) || (root > right && !left)) break;
-      else if (root < left && left > right) {
+      let left, right;
+      let swapIdx = null;
+      if (leftChildIdx < length) {
+        left = this.values[leftChildIdx];
+        if (left > elem) {
+          swapIdx = leftChildIdx;
+        }
+      }
+      if (rightChildIdx < length) {
+        right = this.values[rightChildIdx];
+        if (right > elem) {
+          if (swapIdx === null || right > left) {
+            swapIdx = rightChildIdx;
+          }
+        }
+      }
+
+      if (!swapIdx) break;
+      else {
         let temp = this.values[idx];
-        this.values[idx] = this.values[leftChildIdx];
-        this.values[leftChildIdx] = temp;
-        idx = leftChildIdx;
-      } else if (root < right && right > left) {
-        let temp = this.values[idx];
-        this.values[idx] = this.values[rightChildIdx];
-        this.values[rightChildIdx] = temp;
-        idx = rightChildIdx;
+        this.values[idx] = this.values[swapIdx];
+        this.values[swapIdx] = temp;
+        idx = swapIdx;
       }
     }
   }
