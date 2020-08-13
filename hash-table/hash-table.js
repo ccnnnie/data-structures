@@ -1,6 +1,10 @@
 // a simple hash function for learning purposes
 // uses separate chaining to handle collisions
 
+// insertion, lookup, delete - O(1) time complexity but worst case can be O(n)
+// depends on hash function - minimize collisions for better time complexity
+// O(n) space complexity
+
 class HashTable {
   constructor(size = 53) {
     this.keyMap = new Array(size);
