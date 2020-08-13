@@ -1,5 +1,4 @@
 const BST = require('./bst');
-const { TestScheduler } = require('jest');
 
 describe('A Binary Search Tree', () => {
   let tree;
