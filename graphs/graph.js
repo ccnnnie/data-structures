@@ -65,7 +65,7 @@ class Graph {
   //       F
 
   dfIterative(vertex, cb) {
-    if (!this.adjacencyList[vertex]) return;
+    if (!this.adjacencyList[vertex]) return null;
     const stack = [vertex];
     const visited = {};
     visited[vertex] = true;
@@ -86,6 +86,7 @@ class Graph {
   // breadth first traversal
 
   bfTraversal(vertex, cb) {
+    if (!this.adjacencyList[vertex]) return null;
     const queue = [vertex];
     const visited = {};
     visited[vertex] = true;
