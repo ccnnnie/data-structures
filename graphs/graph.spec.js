@@ -1,7 +1,7 @@
 const Graph = require('./graph');
 
 describe('A Graph', () => {
-  let graph, cities;
+  let graph, cities, nodes;
   beforeEach(() => {
     graph = new Graph();
     cities = ['Tokyo', 'London', 'New York City', 'Paris', 'Madrid'];
@@ -78,5 +78,56 @@ describe('A Graph', () => {
       expect.arrayContaining(['New York City'])
     );
     expect(graph.adjacencyList['New York City']).toBeUndefined();
+  });
+});
+
+describe('Graph Traversal', () => {
+  let graph;
+  beforeEach(() => {
+    graph = new Graph();
+    const nodes = ['A', 'B', 'C', 'D', 'E', 'F'];
+    nodes.forEach((node) => graph.addVertex(node));
+    graph.addEdge('A', 'B');
+    graph.addEdge('A', 'C');
+    graph.addEdge('B', 'D');
+    graph.addEdge('C', 'E');
+    graph.addEdge('D', 'E');
+    graph.addEdge('D', 'F');
+    graph.addEdge('E', 'F');
+
+    //        A
+    //      /   \
+    //     B    C
+    //    /      \
+    //   D-------E
+    //    \     /
+    //       F
+  });
+
+  test('can be traversed depth first recursively', () => {
+    const results = [];
+    const cb = function(node) {
+      results.push(node);
+    };
+    graph.dfRecursive('A', cb);
+    expect(results).toEqual(['A', 'B', 'D', 'E', 'C', 'F']);
+  });
+
+  test('can be traversed depth first iteratively', () => {
+    const results = [];
+    const cb = function(node) {
+      results.push(node);
+    };
+    graph.dfIterative('A', cb);
+    expect(results).toEqual(['A', 'C', 'E', 'F', 'D', 'B']);
+  });
+
+  test('can be traversed breadth first', () => {
+    const results = [];
+    const cb = function(node) {
+      results.push(node);
+    };
+    graph.bfTraversal('A', cb);
+    expect(results).toEqual(['A', 'B', 'C', 'D', 'E', 'F']);
   });
 });
