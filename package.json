@@ -17,7 +17,7 @@
   },
   "homepage": "https://github.com/connielok/data-structures#readme",
   "devDependencies": {
-    "eslint": "^7.5.0",
     "jest": "^26.1.0"
-  }
+  },
+  "dependencies": {}
 }
