@@ -25,7 +25,9 @@ class LRUCache {
   // O(1) time complexity
   get(key) {
     if (this.map[key]) {
-      return this.map[key].val;
+      const node = this.delete(this.map[key]);
+      this.addToHead(node);
+      return this.map[key];
     } else return null;
   }
 
@@ -38,17 +40,16 @@ class LRUCache {
         if there is, add new node to head of list and add to map
         if not, evict the tail node and remove from map and then add new node to head of list and to map
     */
+    const newNode = new Node(key, val);
     const existingNode = this.get(key);
     if (existingNode !== null) {
       this.delete(existingNode);
-      this.addToHead(existingNode);
     } else {
-      const newNode = new Node(key, val);
       if (this.length >= this.capacity) {
         this.delete(this.tail);
       }
-      this.addToHead(newNode);
     }
+    this.addToHead(newNode);
   }
 
   addToHead(node) {
@@ -76,6 +77,7 @@ class LRUCache {
     node.next = null;
     this.length--;
     delete this.map[node.key];
+    return node;
   }
 }
 
