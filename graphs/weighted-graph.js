@@ -1,3 +1,5 @@
+const { PriorityQueue } = require('../binary-heap/priority-queue');
+
 class WeightedGraph {
   constructor() {
     this.adjacencyList = {};
@@ -43,6 +45,48 @@ class WeightedGraph {
       this.removeEdge(vertex, node);
     }
     delete this.adjacencyList[vertex];
+  }
+
+  // find shortest path
+  dijkstra(start, end) {
+    const nodes = new PriorityQueue();
+    const distanceFromStart = {};
+    const previous = {}; // the previous node in path - how did we get to this node?
+    const path = [];
+    for (let vertex in this.adjacencyList) {
+      if (vertex !== start) {
+        distanceFromStart[vertex] = Infinity;
+        nodes.enqueue(vertex, Infinity);
+      } else {
+        distanceFromStart[vertex] = 0;
+        nodes.enqueue(vertex, 0);
+      }
+      previous[vertex] = null;
+    }
+
+    while (nodes.values.length) {
+      const closestVertex = nodes.dequeue().val; // gets vertex with smallest priority
+      if (closestVertex === end) {
+        let node = closestVertex;
+        while (node !== null) {
+          path.push(node);
+          node = previous[node];
+        }
+        return path.reverse();
+      } else if (distanceFromStart[closestVertex] !== Infinity) {
+        this.adjacencyList[closestVertex].forEach((neighbor) => {
+          const distance = distanceFromStart[closestVertex] + neighbor.weight;
+          if (distance < distanceFromStart[neighbor.node]) {
+            // updating new smallest distance to neighbor
+            distanceFromStart[neighbor.node] = distance;
+            // updating previous - how we got to neighbor
+            previous[neighbor.node] = closestVertex;
+            // enqueue in priority queue with new priority
+            nodes.enqueue(neighbor.node, distance);
+          }
+        });
+      }
+    }
   }
 }
 

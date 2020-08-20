@@ -77,4 +77,27 @@ describe('A Weighted Graph', () => {
     }
     expect(graph.adjacencyList['New York City']).toBeUndefined();
   });
+
+  test('can find shortest path from start to end point', () => {
+    graph.addVertex('A');
+    graph.addVertex('B');
+    graph.addVertex('C');
+    graph.addVertex('D');
+    graph.addVertex('E');
+    graph.addVertex('F');
+
+    graph.addEdge('A', 'B', 4);
+    graph.addEdge('A', 'C', 2);
+    graph.addEdge('B', 'E', 3);
+    graph.addEdge('C', 'D', 2);
+    graph.addEdge('C', 'F', 4);
+    graph.addEdge('D', 'E', 3);
+    graph.addEdge('D', 'F', 1);
+    graph.addEdge('E', 'F', 1);
+
+    expect(graph.dijkstra('A', 'E')).toEqual(['A', 'C', 'D', 'F', 'E']);
+    expect(graph.dijkstra('F', 'B')).toEqual(['F', 'E', 'B']);
+    expect(graph.dijkstra('C', 'E')).toEqual(['C', 'D', 'F', 'E']);
+    expect(graph.dijkstra('C', 'B')).toEqual(['C', 'A', 'B']);
+  });
 });
