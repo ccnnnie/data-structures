@@ -1,5 +1,25 @@
 // undirected graph using adjacency list
 
+/*
+ex adjacency list
+  //        A
+  //      /   \
+  //     B    C
+  //    /      \
+  //   D-------E
+  //    \     /
+  //       F
+
+{
+  A: [B, C],
+  B: [A, D],
+  C: [A, E],
+  D: [B, E, F],
+  E: [C, D, F],
+  F: [D, E]
+}
+*/
+
 class Graph {
   constructor() {
     this.adjacencyList = {};
@@ -56,13 +76,6 @@ class Graph {
       }
     });
   }
-  //        A
-  //      /   \
-  //     B    C
-  //    /      \
-  //   D-------E
-  //    \     /
-  //       F
 
   dfIterative(vertex, cb) {
     if (!this.adjacencyList[vertex]) return null;
