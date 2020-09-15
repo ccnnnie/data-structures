@@ -79,6 +79,54 @@ class Graph {
       throw new Error('Vertex does not exist in graph.');
     }
   }
+
+  // depth first search traversal
+  // use stack data structure
+  // continue following all neighbors of a node before going to "sibling" neighbor
+  dfs(vertex, cb, visited = {}) {
+    const idx = this.vertices.get(vertex);
+    if (idx !== undefined) {
+      const keys = Array.from(this.vertices.keys());
+      cb(keys[idx]);
+      visited[idx] = true;
+      const row = this.adjacencyMatrix[idx];
+      for (let i = 0; i < row.length; i++) {
+        if (row[i] === 1 && !visited[i]) {
+          this.dfs(keys[i], cb, visited);
+        }
+      }
+    } else {
+      throw new Error('Vertex does not exist in graph.');
+    }
+  }
+
+  // breadth first search traversal
+  // use queue data structure
+  // visit neighbors at current depth (row) first
+  bfs(vertex, cb) {
+    const idx = this.vertices.get(vertex);
+    if (idx !== undefined) {
+      const keys = Array.from(this.vertices.keys());
+      const queue = [idx];
+      const visited = { [idx]: true };
+
+      while (queue.length) {
+        const currIdx = queue.shift();
+        const row = this.adjacencyMatrix[currIdx];
+
+        for (let i = 0; i < row.length; i++) {
+          if (row[i] === 1 && !visited[i]) {
+            queue.push(i);
+            visited[i] = true;
+          }
+        }
+
+        cb(keys[currIdx]);
+      }
+    } else {
+      throw new Error('Vertex does not exist in graph.');
+    }
+  }
 }
 
 module.exports = Graph;

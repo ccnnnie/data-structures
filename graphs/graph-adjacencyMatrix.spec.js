@@ -113,53 +113,69 @@ describe('A Graph', () => {
   });
 });
 
-// describe('Graph Traversal', () => {
-//   let graph;
-//   beforeEach(() => {
-//     graph = new Graph();
-//     const nodes = ['A', 'B', 'C', 'D', 'E', 'F'];
-//     nodes.forEach((node) => graph.addVertex(node));
-//     graph.addEdge('A', 'B');
-//     graph.addEdge('A', 'C');
-//     graph.addEdge('B', 'D');
-//     graph.addEdge('C', 'E');
-//     graph.addEdge('D', 'E');
-//     graph.addEdge('D', 'F');
-//     graph.addEdge('E', 'F');
+describe('Graph Traversal', () => {
+  let graph;
+  beforeEach(() => {
+    graph = new Graph(6);
+    const nodes = ['A', 'B', 'C', 'D', 'E', 'F'];
+    nodes.forEach((node) => graph.addVertex(node));
+    graph.addEdge('A', 'B');
+    graph.addEdge('A', 'C');
+    graph.addEdge('B', 'D');
+    graph.addEdge('C', 'E');
+    graph.addEdge('D', 'E');
+    graph.addEdge('D', 'F');
+    graph.addEdge('E', 'F');
 
-//     //        A
-//     //      /   \
-//     //     B    C
-//     //    /      \
-//     //   D-------E
-//     //    \     /
-//     //       F
-//   });
+    //        A
+    //      /   \
+    //     B    C
+    //    /      \
+    //   D-------E
+    //    \     /
+    //       F
 
-//   test('can be traversed depth first recursively', () => {
-//     const results = [];
-//     const cb = function(node) {
-//       results.push(node);
-//     };
-//     graph.dfRecursive('A', cb);
-//     expect(results).toEqual(['A', 'B', 'D', 'E', 'C', 'F']);
-//   });
+    //     A  B  C  D  E  F
+    //   [
+    // A  [0, 1, 1, 0, 0, 0],
+    // B  [1, 0, 0, 1, 0, 0],
+    // C  [1, 0, 0, 0, 1, 0],
+    // D  [0, 1, 0, 0, 1, 1],
+    // E  [0, 0, 1, 1, 0, 1],
+    // F  [0, 0, 0, 1, 1, 0]
+    //   ]
 
-//   test('can be traversed depth first iteratively', () => {
-//     const results = [];
-//     const cb = function(node) {
-//       results.push(node);
-//     };
-//     graph.dfIterative('A', cb);
-//     expect(results).toEqual(['A', 'C', 'E', 'F', 'D', 'B']);
-//   });
+    // [5];
 
-//   test('can be traversed breadth first', () => {
-//     const results = [];
-//     const cb = function(node) {
-//       results.push(node);
-//     };
-//     graph.bfTraversal('A', cb);
-//     expect(results).toEqual(['A', 'B', 'C', 'D', 'E', 'F']);
-//   });
-// });
+    //visited 0, 2, 1, 3, 4, 5
+
+    // A, B, C, D, E
+  });
+
+  test('can be traversed depth first recursively', () => {
+    const results = [];
+    const cb = function(node) {
+      results.push(node);
+    };
+    graph.dfs('A', cb);
+    expect(results).toEqual(['A', 'B', 'D', 'E', 'C', 'F']);
+  });
+
+  //   test('can be traversed depth first iteratively', () => {
+  //     const results = [];
+  //     const cb = function(node) {
+  //       results.push(node);
+  //     };
+  //     graph.dfIterative('A', cb);
+  //     expect(results).toEqual(['A', 'C', 'E', 'F', 'D', 'B']);
+  //   });
+
+  test('can be traversed breadth first', () => {
+    const results = [];
+    const cb = function(node) {
+      results.push(node);
+    };
+    graph.bfs('A', cb);
+    expect(results).toEqual(['A', 'B', 'C', 'D', 'E', 'F']);
+  });
+});
