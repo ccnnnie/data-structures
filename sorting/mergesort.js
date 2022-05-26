@@ -1,15 +1,19 @@
 /**
- * Dive and conquer
+ * Sort an array using mergesort algorithm
+ * https://www.interviewbit.com/tutorial/merge-sort-algorithm/ 
+ * Divide and conquer
+ *    1. Divide the unsorted list into sub-lists until there are N
+ *      sub-lists with one element in each (N is the number of elements in the unsorted list).
+ *    2. Merge the sub-lists two at a time to produce a sorted sub-list; 
+ *      repeat this until all the elements are included in a single list.
  * Time complexity O(nlogn)
- * Space complexity 
+ * Space complexity  O(n) - this is not an in-place algorithm. we make new subarrays while sorting
  * 
  *            [14, 5, 3, 6, 7, 3, 11, 3]
  *      [14, 5, 3, 6]        [7, 3, 11, 3]
  *  [14, 5]      [3,6]
  * [14]  [5]
  */
-
-// Sort an array using mergesort algorithm
 
 const mergeSort = (arr) => {
   const start = 0;
