@@ -1,5 +1,4 @@
 const Queue = require('./queue');
-const { TestScheduler } = require('jest');
 
 describe('A queue', () => {
   let q;
